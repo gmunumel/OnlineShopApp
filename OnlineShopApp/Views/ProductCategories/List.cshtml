@@ -1,0 +1,11 @@
+﻿@model IEnumerable<OnlineShopApp.Models.ProductCategory>
+
+<div class="list-group">
+@foreach (var item in Model)
+{
+    <a href="#" class="list-group-item">
+        <img class="image-dimens-48px" src="@Url.Content("~/Content/Images/Upload/" + item.ImagePath)" alt="product-category" />
+            @item.Name
+    </a>
+}
+</div>

@@ -68,11 +68,12 @@
                 <a href="index.html" alt="index">
                     <img src="@Url.Content("~/Content/Images/shopping-basket-icon.jpg")" alt="shopping-basket" class="logo-basket" />
                 </a>
-                <div class="list-group">
+                @Html.Action("List", "ProductCategories")
+                @*<div class="list-group">
                     <a href="#" class="list-group-item"><img src="@Url.Content("~/Content/Images/computer-icon.png")" alt="computer-icon" />Computers</a>
                     <a href="#" class="list-group-item"><img src="@Url.Content("~/Content/Images/phone-icon.png")" alt="phone-icon" />Phones</a>
                     <a href="#" class="list-group-item"><img src="@Url.Content("~/Content/Images/tablet-icon.png")" alt="tablet-icon" />Tablets</a>
-                </div>
+                </div>*@
             </div>
 
             <div class="col-lg-9">

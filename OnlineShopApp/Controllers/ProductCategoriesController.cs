@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using OnlineShopApp.Models;
 
 using OnlineShopApp.Helpers;
+using System;
 
 namespace OnlineShopApp.Controllers
 {
@@ -17,6 +18,12 @@ namespace OnlineShopApp.Controllers
         public ActionResult Index()
         {
             return View(db.ProductCategory.ToList());
+        }
+
+        // GET: ProductCategories/List
+        public ActionResult List()
+        {
+            return PartialView(db.ProductCategory.ToList());
         }
 
         // GET: ProductCategories/Details/5
@@ -145,9 +152,18 @@ namespace OnlineShopApp.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             ProductCategory productCategory = db.ProductCategory.Find(id);
-            db.ProductCategory.Remove(productCategory);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.ProductCategory.Remove(productCategory);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Error! An error has occured. May be related to a Product associated to this Product Category."); 
+            }
+            
+            return View(productCategory);
         }
 
         protected override void Dispose(bool disposing)
