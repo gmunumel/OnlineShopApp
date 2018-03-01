@@ -85,10 +85,14 @@
                     @if (Request.IsAuthenticated && User.IsInRole("Client"))
                     {
                         <td>
-                            <input type="number" min="1" max="9" class="quantity form-control" id="quantity-@(item.ProductId)" />
                             @if (item.Quantity > 0)
                             {
+                                <input type="number" min="1" max="9" class="quantity form-control" id="quantity-@(item.ProductId)" />
                                 @Html.ActionLink("Add", "AddProduct", "Checkout", new { @productId = item.ProductId, @clientName = User.Identity.Name, @quantity = 0 }, new { @class = "btn btn-success my-button" })
+                            }
+                            else
+                            {
+                                <strong>No Stock</strong>
                             }
                         </td>
                     }

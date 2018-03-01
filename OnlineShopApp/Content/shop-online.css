@@ -97,3 +97,10 @@ a:hover {
 .price {
     font-size: 22px;
 }
+
+.image-online-shopping {
+    background-image: url(Images/online-shopping.jpg);
+    background-size: cover;
+    width: 825px;
+    height: 322px;
+}

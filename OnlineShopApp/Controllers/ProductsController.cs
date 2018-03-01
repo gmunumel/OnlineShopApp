@@ -18,6 +18,12 @@ namespace OnlineShopApp.Controllers
             return View(product.ToList());
         }
 
+        // GET: Products/List
+        public ActionResult List()
+        {
+            return PartialView(db.Product.ToList());
+        }
+
         // GET: Products/Details/5
         public ActionResult Details(int? id)
         {
@@ -104,11 +110,11 @@ namespace OnlineShopApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = RoleConstants.Admin)]
-        public ActionResult Edit([Bind(Include = "ProductId,Name,ProductCategoryId,Price,Quantity,Description,ImagePath,IsChangeImage")] ProductViewModel productViewModel)
+        public ActionResult Edit([Bind(Include = "ProductId,Name,ProductCategoryId,Price,Quantity,Description,ImagePath,ImageName,IsChangeImage")] ProductViewModel productViewModel)
         {
             if (ModelState.IsValid)
             {
-                var imagePath = string.Empty;
+                var imagePath = productViewModel.ImageName;
                 if (productViewModel.IsChangeImage)
                 {
                     var myHelper = new ControllersHelper();

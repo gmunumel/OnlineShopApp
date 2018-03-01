@@ -260,9 +260,16 @@
     <Content Include="Content\Images\cart-icon.png" />
     <Content Include="Content\Images\computer-icon.png" />
     <Content Include="Content\Images\favicon.png" />
+    <Content Include="Content\Images\online-shopping.jpg" />
     <Content Include="Content\Images\phone-icon.png" />
     <Content Include="Content\Images\shopping-basket-icon.jpg" />
     <Content Include="Content\Images\tablet-icon.png" />
+    <Content Include="Content\Images\Upload\3992163201.png" />
+    <Content Include="Content\Images\Upload\4058752568.png" />
+    <Content Include="Content\Images\Upload\4562562299.jpg" />
+    <Content Include="Content\Images\Upload\5548331099.png" />
+    <Content Include="Content\Images\Upload\6710326477.png" />
+    <Content Include="Content\Images\Upload\9661961304.jpg" />
     <Content Include="Content\shop-online.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -362,6 +369,7 @@
     <Content Include="Views\Checkout\Edit.cshtml" />
     <Content Include="Views\Checkout\Delete.cshtml" />
     <Content Include="Views\ProductCategories\List.cshtml" />
+    <Content Include="Views\Products\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -374,9 +382,7 @@
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\Images\Upload\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

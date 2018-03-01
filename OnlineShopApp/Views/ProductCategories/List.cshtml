@@ -4,8 +4,15 @@
 @foreach (var item in Model)
 {
     <a href="#" class="list-group-item">
-        <img class="image-dimens-48px" src="@Url.Content("~/Content/Images/Upload/" + item.ImagePath)" alt="product-category" />
-            @item.Name
+        @if (!string.IsNullOrWhiteSpace(item.ImagePath))
+        {
+            <img class="image-dimens-48px" src="@Url.Content("~/Content/Images/Upload/" + item.ImagePath)" alt="product-category" />
+        }
+        else
+        {
+            <i class="fas fa-th big-icon"></i>
+        }
+        @item.Name
     </a>
 }
 </div>

@@ -104,11 +104,11 @@ namespace OnlineShopApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = RoleConstants.Admin)]
-        public ActionResult Edit([Bind(Include = "ProductCategoryId,Name,Description,ImagePath,IsChangeImage")] ProductCategoryViewModel productCategoryViewModel)
+        public ActionResult Edit([Bind(Include = "ProductCategoryId,Name,Description,ImagePath,ImageName,IsChangeImage")] ProductCategoryViewModel productCategoryViewModel)
         {
             if (ModelState.IsValid)
             {
-                var imagePath = string.Empty;
+                var imagePath = productCategoryViewModel.ImageName;
                 if (productCategoryViewModel.IsChangeImage)
                 {
                     var myHelper = new ControllersHelper();
