@@ -1,0 +1,83 @@
+﻿@model OnlineShopApp.Models.CheckoutProduct
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Checkout Purchase - Edit</h2>
+
+
+@using (Html.BeginForm("Edit", "Checkout", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Index)
+        @Html.HiddenFor(model => model.ProductId)
+        @Html.HiddenFor(model => model.ProductImage)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProductImage, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="margin-top-10px"></div>
+            <div class="control-label col-md-2">
+                @if (!string.IsNullOrWhiteSpace(Model.ProductImage))
+                {
+                    <img src="@Url.Content("~/Content/Images/Upload/" + Model.ProductImage)" alt="product-icon" class="image-dimens-48px" />
+                }
+                else
+                {
+                    <i class="fas fa-desktop big-icon"></i>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ClientName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ClientName, new { @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.ClientName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProductPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ProductPrice, new { @type = "number", @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.ProductPrice, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Quantity, new { @type = "number", @class = "form-control", @min = "1", @max = "9" })
+                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10 clearfix">
+                <input type="submit" value="Save" class="btn btn-success float-right my-button" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <a class="btn btn-success my-button" href="@Url.Action("Index", "Checkout")"><i class="fas fa-arrow-alt-circle-left"></i> Back to List</a>
+    <div class="margin-top-10px"></div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

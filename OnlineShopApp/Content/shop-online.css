@@ -1,0 +1,81 @@
+/*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+
+body {
+  padding-top: 54px;
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}
+
+a {
+  color: rgb(142, 197,73);
+  font-weight:bold;
+}
+
+a:hover {
+  color: rgb(52,58,64);
+}
+
+.big-icon {
+  font-size: 32px;
+}
+
+.logo-main {
+  height: 40px;
+  width: 47px;
+}
+
+.logo-basket {
+  width: 210px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.margin-top-10px {
+  margin-top: 10px;
+}
+
+.margin-top-50px {
+  margin-top: 50px;
+}
+
+.float-right {
+  float: right;
+}
+
+.my-button {
+  background-color: rgb(142, 197,73);
+  border-color: rgb(142, 197,73);
+  color: white;
+  font-weight: bold;
+}
+
+.my-button:hover {
+  background-color: rgb(52,58,64);
+  border-color: rgb(52,58,64);
+  color: rgb(154, 157, 160);
+  font-weight: bold;
+}
+
+.image-dimens-48px {
+  height: 48px;
+  width: 48px;
+}
+
+.quantity {
+    width: 55px;
+    display: inline;
+}
+
+.visibility-hidden {
+    visibility: hidden;
+}

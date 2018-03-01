@@ -1,0 +1,60 @@
+﻿@model IEnumerable<OnlineShopApp.Models.ProductCategory>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Product Category - List</h2>
+
+@if (Request.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <p>
+        <div class="clearfix">
+            @Html.ActionLink("Create", "Create", "ProductCategories", null, new { @class = "btn btn-success float-right my-button" })
+        </div>
+        <div class="margin-top-10px"></div>
+    </p>
+}
+<table class="table table-bordered table-hover text-center">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">
+                Image
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th scope="col">Operations</th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @if (!string.IsNullOrWhiteSpace(item.ImagePath))
+                {
+                    <img src="@Url.Content("~/Content/Images/Upload/" + item.ImagePath)" alt="computer-icon" class="image-dimens-48px" />
+                }
+                else
+                {
+                    <i class="fas fa-th big-icon"></i>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <a href="@Url.Action("Edit", "ProductCategories", new { id = item.ProductCategoryId })"><i class="big-icon fas fa-pencil-alt"></i></a> <span>&nbsp;</span>
+                }
+                <a href="@Url.Action("Details", "ProductCategories", new { id=item.ProductCategoryId })"><i class="big-icon far fa-file-alt"></i></a> &nbsp;
+                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <a href="@Url.Action("Delete", "ProductCategories", new { id = item.ProductCategoryId })" ><i class="big-icon far fa-trash-alt"></i></a>
+                }
+            </td>
+        </tr>
+    }
+
+</table>

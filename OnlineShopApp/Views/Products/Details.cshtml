@@ -1,0 +1,78 @@
+﻿@model OnlineShopApp.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Product - Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            Image
+        </dt>
+
+        <dd>
+            @if (!string.IsNullOrWhiteSpace(Model.ImagePath))
+            {
+                <img src="@Url.Content("~/Content/Images/Upload/" + Model.ImagePath)" alt="product-icon" class="image-dimens-48px" />
+            }
+            else
+            {
+                <i class="fas fa-desktop big-icon"></i>
+            }
+        </dd>
+
+        <dt>
+            Category
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductCategory.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+    { 
+        <div class="clearfix">
+            <a class="btn btn-success my-button float-right" href="@Url.Action("Edit", "Products", new { id = Model.ProductId })">Edit</a>
+        </div>
+        <div class="margin-top-10px"></div>
+    }
+    <a class="btn btn-success my-button" href="@Url.Action("Index", "Products")"><i class="fas fa-arrow-alt-circle-left"></i> Back to List</a>
+</p>

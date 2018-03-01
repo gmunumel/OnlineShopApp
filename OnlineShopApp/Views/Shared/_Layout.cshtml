@@ -1,0 +1,101 @@
+﻿@using Microsoft.AspNet.Identity
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Online Shop - GM</title>
+
+    <!-- Favicon image -->
+    <link rel="icon" href="@Url.Content("~/Content/Images/favicon.png")">
+    <!-- Bootstrap, Fontawesome, Custom styles load -->
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <img src="@Url.Content("~/Content/Images/cart-icon.png")" alt="cart icon" class="logo-main" />
+            <a class="navbar-brand" href="index.html">Online Shop
+                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <span>- Admin <i class="fas fa-user"></i></span>
+                }
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    @if (Request.IsAuthenticated && User.IsInRole("Client"))
+                    {
+                        <li class="nav-item">
+                            @{ 
+                                int quantityCheckout = 0;
+                                Int32.TryParse(@Html.Action("QuantityProducts", "Checkout").ToString(), out quantityCheckout);
+                            }
+                            @if (quantityCheckout == 0)
+                            {
+                                <a class="nav-link" href="@Url.Action("Index", "Checkout")"><i class="fas fa-shopping-cart"></i> (@quantityCheckout)</a>
+                            }
+                            else
+                            {
+                                <a class="nav-link" href="@Url.Action("Index", "Checkout")"><i class="fas fa-cart-plus"></i> (@quantityCheckout)</a>
+                            }
+                        </li>
+                    }
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Users")"><i class="fas fa-users"></i> Clients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Products")"><i class="fas fa-desktop"></i> Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "ProductCategories")"><i class="fas fa-th"></i> Product Catgs</a>
+                    </li>
+                    @Html.Partial("_LoginPartial")
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <a href="index.html" alt="index">
+                    <img src="@Url.Content("~/Content/Images/shopping-basket-icon.jpg")" alt="shopping-basket" class="logo-basket" />
+                </a>
+                <div class="list-group">
+                    <a href="#" class="list-group-item"><img src="@Url.Content("~/Content/Images/computer-icon.png")" alt="computer-icon" />Computers</a>
+                    <a href="#" class="list-group-item"><img src="@Url.Content("~/Content/Images/phone-icon.png")" alt="phone-icon" />Phones</a>
+                    <a href="#" class="list-group-item"><img src="@Url.Content("~/Content/Images/tablet-icon.png")" alt="tablet-icon" />Tablets</a>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+
+                <div class="margin-top-50px"></div>
+                @RenderBody()
+            </div>
+            <!-- /.col-lg-9 -->
+
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Author: Gabriel Muñumel - Online Shop ☺</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+    <!-- Bootstrap, Jquery core JavaScript -->
+    @Scripts.Render("~/Scripts/js")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

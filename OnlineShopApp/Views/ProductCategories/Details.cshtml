@@ -1,0 +1,53 @@
+﻿@model OnlineShopApp.Models.ProductCategory
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Product Category - Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Image
+        </dt>
+
+        <dd>
+            @if (!string.IsNullOrWhiteSpace(Model.ImagePath))
+            {
+                <img src="@Url.Content("~/Content/Images/Upload/" + Model.ImagePath)" alt="computer-icon" class="image-dimens-48px" />
+            }
+            else
+            {
+                <i class="fas fa-th big-icon"></i>
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+</div>
+<p>
+    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <div class="clearfix">
+            <a class="btn btn-success my-button float-right" href="@Url.Action("Edit", "ProductCategories", new { id = Model.ProductCategoryId })">Edit</a>
+        </div>
+        <div class="margin-top-10px"></div>
+    }
+    <a class="btn btn-success my-button" href="@Url.Action("Index", "ProductCategories")"><i class="fas fa-arrow-alt-circle-left"></i> Back to List</a>
+</p>

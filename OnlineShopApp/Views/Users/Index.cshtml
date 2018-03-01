@@ -1,0 +1,56 @@
+﻿@model IEnumerable<OnlineShopApp.Models.UserViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Client - List</h2>
+
+<p>
+    <div class="clearfix">
+        @Html.ActionLink("Create", "Register", "Account", null, new { @class = "btn btn-success my-button float-right" })
+    </div>
+    <div class="margin-top-10px"></div>
+</p>
+<table class="table table-bordered table-hover text-center">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.SelectedRoleName)
+            </th>
+            <th scope="col">Operations</th>
+        </tr>
+    </thead>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SelectedRoleName)
+        </td>
+        <td>
+            @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <a href="@Url.Action("Edit", "Users", new { id = item.Id })"><i class="big-icon fas fa-pencil-alt"></i></a> <span>&nbsp;</span>
+            }
+            <a href="@Url.Action("Details", "Users", new { id=item.Id })"><i class="big-icon far fa-file-alt"></i></a> &nbsp;
+            @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <a href="@Url.Action("Delete", "Users", new { id = item.Id })"><i class="big-icon far fa-trash-alt"></i></a>
+            }
+        </td>
+    </tr>
+}
+
+</table>

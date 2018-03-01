@@ -1,0 +1,46 @@
+﻿@model OnlineShopApp.Models.UserViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>User - Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SelectedRoleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SelectedRoleName)
+        </dd>
+    </dl>
+</div>
+<p>
+    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+    { 
+        <div class="clearfix">
+            <a class="btn btn-success my-button float-right" href="@Url.Action("Edit", "Edit", new { id = Model.Id })">Edit</a>
+        </div>
+        <div class="margin-top-10px"></div>
+    }
+    <a class="btn btn-success my-button" href="@Url.Action("Index", "Users")"><i class="fas fa-arrow-alt-circle-left"></i> Back to List</a>
+</p>

@@ -1,0 +1,65 @@
+﻿@model OnlineShopApp.Models.CheckoutPurchase
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Checkout Product - List</h2>
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table table-bordered table-hover text-center">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">
+                Image
+            </th>
+            <th scope="col">
+                Product Name
+            </th>
+            <th scope="col">
+                Client Name
+            </th>
+            <th scope="col">
+                Product Price
+            </th>
+            <th scope="col">
+                Quantity
+            </th>
+            <th scope="col">Operations</th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model.Select((value, i) => new {i, value}))
+    {
+        <tr>
+            <td>
+                @if (!string.IsNullOrWhiteSpace(item.value.ProductImage))
+                {
+                    <img src="@Url.Content("~/Content/Images/Upload/" + item.value.ProductImage)" alt="product-icon" class="image-dimens-48px" />
+                }
+                else
+                {
+                    <i class="fas fa-desktop big-icon"></i>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.value.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.value.ClientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.value.ProductPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.value.Quantity)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", "Checkout", new { id = item.i })"><i class="big-icon fas fa-pencil-alt"></i></a> <span>&nbsp;</span>
+                <a href="@Url.Action("Delete", "Checkout", new { id = item.i })"><i class="big-icon far fa-trash-alt"></i></a>
+            </td>
+        </tr>
+    }
+
+</table>
