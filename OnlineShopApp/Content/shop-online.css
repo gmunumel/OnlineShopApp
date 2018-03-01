@@ -23,6 +23,10 @@ a:hover {
   color: rgb(52,58,64);
 }
 
+.table > tbody > tr > td {
+  vertical-align: middle;
+}
+
 .big-icon {
   font-size: 32px;
 }
@@ -76,6 +80,20 @@ a:hover {
     display: inline;
 }
 
+.display-none {
+    display: none;
+}
+
 .visibility-hidden {
     visibility: hidden;
+}
+
+.price-box {
+    padding: 10px;
+    vertical-align: middle;
+    font-weight: bold;
+}
+
+.price {
+    font-size: 22px;
 }

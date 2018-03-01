@@ -18,11 +18,11 @@ $(function () {
         var validation = $('.validation-summary-valid');
         if (parseInt($.trim(maxQuantity.text())) < parseInt(quantity.val())) {
             addButton.css('visibility', 'hidden');
-            validation.css('visibility', 'visible');
+            validation.show();
             
         } else {
             addButton.css('visibility', 'visible');
-            validation.css('visibility', 'hidden');
+            validation.hide();
         }
     });
 });

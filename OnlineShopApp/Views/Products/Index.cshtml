@@ -15,7 +15,7 @@
         <div class="margin-top-10px"></div>
     </p>
 }
-<div class="validation-summary-valid text-danger visibility-hidden" data-valmsg-summary="true">
+<div class="validation-summary-valid text-danger display-none" data-valmsg-summary="true">
     <ul>
         <li>
             Error :  Quantity cannot be higher than stock available       
@@ -48,50 +48,63 @@
         </tr>
     </thead>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @if (!string.IsNullOrWhiteSpace(item.ImagePath))
-                {
-                    <img src="@Url.Content("~/Content/Images/Upload/" + item.ImagePath)" alt="product-icon" class="image-dimens-48px" />
-                }
-                else
-                {
-                    <i class="fas fa-desktop big-icon"></i>
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td id="max-quantity-@(item.ProductId)">
-                @Html.DisplayFor(modelItem => item.Quantity )
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductCategory.Name)
-            </td>
-            @if (Request.IsAuthenticated && User.IsInRole("Client"))
-            { 
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
                 <td>
-                    <input type="number" min="1" max="9" class="quantity form-control" id="quantity-@(item.ProductId)" />
-                    @Html.ActionLink("Add", "AddProduct", "Checkout", new { @productId = item.ProductId, @clientName = User.Identity.Name, @quantity = 0 }, new { @class = "btn btn-success my-button" })
+                    @if (!string.IsNullOrWhiteSpace(item.ImagePath))
+                    {
+                        <img src="@Url.Content("~/Content/Images/Upload/" + item.ImagePath)" alt="product-icon" class="image-dimens-48px" />
+                    }
+                    else
+                    {
+                        <i class="fas fa-desktop big-icon"></i>
+                    }
                 </td>
-            }
-            <td>
-                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
-                {
-                    <a href="@Url.Action("Edit", "Products", new { id = item.ProductId })"><i class="big-icon fas fa-pencil-alt"></i></a> <span>&nbsp;</span>
-                }
-                <a href="@Url.Action("Details", "Products", new { id=item.ProductId })"><i class="big-icon far fa-file-alt"></i></a> &nbsp;
-                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
-                {
-                    <a href="@Url.Action("Delete", "Products", new { id = item.ProductId })"><i class="big-icon far fa-trash-alt"></i></a>
-                }
-            </td>
-        </tr>
-    }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td id="max-quantity-@(item.ProductId)">
+                    @Html.DisplayFor(modelItem => item.Quantity) &nbsp;
+                    @if (item.Quantity > 0)
+                    {
+                        <i class="fas fa-thermometer-full big-icon"></i>
+                    }
+                    else
+                    {
+                        <i class="fas fa-thermometer-empty big-icon"></i>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductCategory.Name)
+                </td>
+                    @if (Request.IsAuthenticated && User.IsInRole("Client"))
+                    {
+                        <td>
+                            <input type="number" min="1" max="9" class="quantity form-control" id="quantity-@(item.ProductId)" />
+                            @if (item.Quantity > 0)
+                            {
+                                @Html.ActionLink("Add", "AddProduct", "Checkout", new { @productId = item.ProductId, @clientName = User.Identity.Name, @quantity = 0 }, new { @class = "btn btn-success my-button" })
+                            }
+                        </td>
+                    }
+                    <td>
+                        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <a href="@Url.Action("Edit", "Products", new { id = item.ProductId })"><i class="big-icon fas fa-pencil-alt"></i></a> <span>&nbsp;</span>
+                        }
+                        <a href="@Url.Action("Details", "Products", new { id=item.ProductId })"><i class="big-icon far fa-file-alt"></i></a> &nbsp;
+                        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <a href="@Url.Action("Delete", "Products", new { id = item.ProductId })"><i class="big-icon far fa-trash-alt"></i></a>
+                        }
+                </td>
+            </tr>
+        }
+    </tbody>
 
 </table>

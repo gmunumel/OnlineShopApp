@@ -1,4 +1,8 @@
-﻿using OnlineShopApp.Models;
+﻿using Microsoft.AspNet.Identity;
+using OnlineShopApp.Models;
+using System;
+using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 
@@ -7,17 +11,18 @@ namespace OnlineShopApp.Controllers
     [Authorize(Roles = RoleConstants.Client)]
     public class CheckoutController : Controller
     {
-        private OnlineShopEntities onlineShopContext = new OnlineShopEntities();
+        private OnlineShopEntities db = new OnlineShopEntities();
 
         // GET: Checkout
         public ActionResult Index(CheckoutPurchase checkoutPurchase)
         {
+            ViewBag.TotalPrice = checkoutPurchase.Sum(cp => cp.ProductPrice * cp.Quantity);
             return View(checkoutPurchase);
         }
 
         public ActionResult AddProduct(CheckoutPurchase checkoutPurchase, int productId, string clientName, int quantity = 0)
         {
-            Product product = onlineShopContext.Product.Find(productId);
+            Product product = db.Product.Find(productId);
             CheckoutProduct myCheckoutPurchase = new CheckoutProduct
             {
                 Index = checkoutPurchase.Count,
@@ -36,6 +41,38 @@ namespace OnlineShopApp.Controllers
         public ActionResult QuantityProducts(CheckoutPurchase checkoutPurchase)
         {
             return PartialView(checkoutPurchase);
+        }
+
+        public ActionResult Buy(CheckoutPurchase checkoutPurchase)
+        {
+            Product product;
+            foreach(var item in checkoutPurchase)
+            {
+                product = db.Product.Find(item.ProductId);
+                if (product != null)
+                {
+                    // update quantities products
+                    product.Quantity -= item.Quantity;
+                    db.Product.Attach(product);
+                    db.Entry(product).Property(p => p.Quantity).IsModified = true;
+
+                    // add new purchase
+                    Purchase purchase = new Purchase
+                    {
+                        ClientId = User.Identity.GetUserId(),
+                        ProductId = item.ProductId,
+                        StorageDate = DateTime.Now
+                    };
+                    db.Purchase.Add(purchase);
+                    db.SaveChanges();   
+                }
+                else
+                {
+                    return View(checkoutPurchase);
+                }
+            }
+            checkoutPurchase.Clear();
+            return RedirectToAction("Index", "Products");
         }
 
         // GET: Checkout/Edit/5
@@ -58,7 +95,7 @@ namespace OnlineShopApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                Product product = onlineShopContext.Product.Find(checkoutProductViewModel.ProductId);
+                Product product = db.Product.Find(checkoutProductViewModel.ProductId);
                 if (product.Quantity >= checkoutProductViewModel.Quantity)
                 {
                     checkoutPurchase[checkoutProductViewModel.Index].Quantity = checkoutProductViewModel.Quantity;
