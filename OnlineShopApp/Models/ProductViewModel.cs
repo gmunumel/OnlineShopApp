@@ -1,6 +1,8 @@
 ﻿using OnlineShopApp.Validators;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
+using System.Web.Mvc;
 
 namespace OnlineShopApp.Models
 {
@@ -13,6 +15,12 @@ namespace OnlineShopApp.Models
 
         [Required(ErrorMessage = "Category is required")]
         public int ProductCategoryId { get; set; }
+
+        //[Required(ErrorMessage = "Category is required")]
+        //public string SelectedUserRole { get; set; }
+
+        [Display(Name = "Category")]
+        public IEnumerable<SelectListItem> ProductCategories { get; set; }
 
         [Required(ErrorMessage = "Price is required")]
         public int Price { get; set; }

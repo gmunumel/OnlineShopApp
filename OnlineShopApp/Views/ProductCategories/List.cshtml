@@ -3,7 +3,7 @@
 <div class="list-group">
 @foreach (var item in Model)
 {
-    <a href="#" class="list-group-item">
+    <a href="@Url.Action("ListByCategoryId", "Products", new { @id = item.ProductCategoryId })" class="list-group-item">
         @if (!string.IsNullOrWhiteSpace(item.ImagePath))
         {
             <img class="image-dimens-48px" src="@Url.Content("~/Content/Images/Upload/" + item.ImagePath)" alt="product-category" />

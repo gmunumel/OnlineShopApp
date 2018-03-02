@@ -31,6 +31,10 @@
 
         <dd>
             @Html.DisplayFor(model => model.Quantity)
+            @if (Model.Quantity == 0)
+            {
+                <strong>(No Stock)</strong>
+            }
         </dd>
 
         <dt>

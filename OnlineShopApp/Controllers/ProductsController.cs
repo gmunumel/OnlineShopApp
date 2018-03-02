@@ -4,6 +4,7 @@ using System.Net;
 using System.Web.Mvc;
 using OnlineShopApp.Models;
 using OnlineShopApp.Helpers;
+using System.Collections.Generic;
 
 namespace OnlineShopApp.Controllers
 {
@@ -22,6 +23,17 @@ namespace OnlineShopApp.Controllers
         public ActionResult List()
         {
             return PartialView(db.Product.ToList());
+        }
+
+        // GET: Products/ListByCategoryId/5
+        public ActionResult ListByCategoryId(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ViewBag.CategoryName = db.ProductCategory.Find(id).Name;
+            return View(db.Product.Where(p => p.ProductCategoryId == id).ToList());
         }
 
         // GET: Products/Details/5
@@ -91,6 +103,17 @@ namespace OnlineShopApp.Controllers
             {
                 return HttpNotFound();
             }
+            var productCategories = new List<SelectListItem>();
+            foreach (var productCategory in db.ProductCategory)
+            {
+                productCategories.Add(new SelectListItem()
+                {
+                    Text = productCategory.Name,
+                    Value = productCategory.ProductCategoryId.ToString(),
+                    // Put all sorts of business logic in here
+                    Selected = product.ProductCategoryId == productCategory.ProductCategoryId ? true : false
+                });
+            }
             ProductViewModel productViewModel = new ProductViewModel
             {
                 ProductId = id.Value,
@@ -98,9 +121,10 @@ namespace OnlineShopApp.Controllers
                 Description = product.Description,
                 Price = product.Price,
                 Quantity = product.Quantity,
-                ImageName = product.ImagePath
+                ImageName = product.ImagePath,
+                ProductCategories = productCategories,
+                ProductCategoryId = product.ProductCategoryId
             };
-            ViewBag.ProductCategoryId = new SelectList(db.ProductCategory, "ProductCategoryId", "Name", productViewModel.ProductCategoryId);
             return View(productViewModel);
         }
 

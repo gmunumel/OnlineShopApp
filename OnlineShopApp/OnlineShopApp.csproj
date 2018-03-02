@@ -370,6 +370,7 @@
     <Content Include="Views\Checkout\Delete.cshtml" />
     <Content Include="Views\ProductCategories\List.cshtml" />
     <Content Include="Views\Products\List.cshtml" />
+    <Content Include="Views\Products\ListByCategoryId.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
