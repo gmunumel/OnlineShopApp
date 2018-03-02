@@ -19,11 +19,13 @@ namespace OnlineShopApp.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db;
+        private OnlineShopEntities onlineShopDB;
 
         public UsersController()
         {
             db = new ApplicationDbContext();
+            onlineShopDB = new OnlineShopEntities();
         }
 
         public UsersController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -201,6 +203,12 @@ namespace OnlineShopApp.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             ApplicationUser appUser = db.Users.Where(u => u.Id == id).FirstOrDefault();
+            var isPurchaseForClientExists = onlineShopDB.Purchase.Any(p => p.ClientId == appUser.Id);
+            if (isPurchaseForClientExists)
+            {
+                ModelState.AddModelError("", "Error! An error has occured. May be related to a Purchase associated with this Client.");
+                return View(GetUserViewModel(appUser));
+            }
             db.Users.Remove(appUser);
             db.SaveChanges();
             return RedirectToAction("Index");

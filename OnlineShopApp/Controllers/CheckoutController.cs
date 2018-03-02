@@ -82,6 +82,7 @@ namespace OnlineShopApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            checkoutPurchase[id.Value].Index = id.Value;
             return View(checkoutPurchase[id.Value] as CheckoutProduct);
         }
 

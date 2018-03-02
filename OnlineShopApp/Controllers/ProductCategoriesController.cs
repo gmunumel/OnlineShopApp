@@ -160,7 +160,7 @@ namespace OnlineShopApp.Controllers
             }
             catch (Exception)
             {
-                ModelState.AddModelError("", "Error! An error has occured. May be related to a Product associated to this Product Category."); 
+                ModelState.AddModelError("", "Error! An error has occured. May be related to a Product associated with this Product Category."); 
             }
             
             return View(productCategory);

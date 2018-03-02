@@ -7,7 +7,7 @@ $(function () {
         $('.image-edit-input').toggle(this.checked);
     }).change();
 
-    $('.quantity').change(function () {
+    $('.quantity').bind('keyup mouseup', function () {
         var addButton = $(this).next();
         var href = addButton.attr('href');
         addButton.attr('href', href.replace(/&?quantity=\d+/, ''));

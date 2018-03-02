@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using OnlineShopApp.Models;
 using OnlineShopApp.Helpers;
 using System.Collections.Generic;
+using System;
 
 namespace OnlineShopApp.Controllers
 {
@@ -186,9 +187,18 @@ namespace OnlineShopApp.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Product product = db.Product.Find(id);
-            db.Product.Remove(product);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.Product.Remove(product);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Error! An error has occured. May be related to a Purchase associated with this Product.");
+            }
+            
+            return View(product);
         }
 
         protected override void Dispose(bool disposing)
