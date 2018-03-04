@@ -16,9 +16,6 @@ namespace OnlineShopApp.Models
         [Required(ErrorMessage = "Category is required")]
         public int ProductCategoryId { get; set; }
 
-        //[Required(ErrorMessage = "Category is required")]
-        //public string SelectedUserRole { get; set; }
-
         [Display(Name = "Category")]
         public IEnumerable<SelectListItem> ProductCategories { get; set; }
 

@@ -161,7 +161,6 @@ namespace OnlineShopApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var myHelper = new ControllersHelper();
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -178,6 +177,7 @@ namespace OnlineShopApp.Controllers
                     // end here
                     return RedirectToAction("Index", "Home");
                 }
+                var myHelper = new ControllersHelper();
                 model.UserRoles = myHelper.GetRolesForUser(context, UserManager);
 
                 AddErrors(result);

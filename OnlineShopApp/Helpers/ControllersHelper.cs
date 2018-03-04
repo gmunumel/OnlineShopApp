@@ -46,6 +46,20 @@ namespace OnlineShopApp.Helpers
             return userRoles;
         }
 
+        public UserViewModel GetUserViewModel(ApplicationUser appUser, ApplicationDbContext db, 
+            ApplicationUserManager userManager)
+        {
+            UserViewModel model = new UserViewModel
+            {
+                Id = appUser.Id,
+                UserName = appUser.UserName,
+                Email = appUser.Email,
+                SelectedRoleName = userManager.GetRoles(appUser.Id).FirstOrDefault(),
+                RoleChoices = db.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList()
+            };
+            return model;
+        }
+
         private string GetRandomImageName()
         {
             return RandomDigits(10);

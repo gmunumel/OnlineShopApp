@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -66,7 +65,8 @@ namespace OnlineShopApp.Controllers
         
             foreach (ApplicationUser appUser in appUsers)
             {
-                model.Add(GetUserViewModel(appUser));
+                var myHelper = new ControllersHelper();
+                model.Add(myHelper.GetUserViewModel(appUser, db, UserManager));
             }
             return View(model);
         }
@@ -83,7 +83,8 @@ namespace OnlineShopApp.Controllers
             {
                 return HttpNotFound();
             }
-            return View(GetUserViewModel(appUser));
+            var myHelper = new ControllersHelper();
+            return View(myHelper.GetUserViewModel(appUser, db, UserManager));
         }
 
         // GET: Users/Create
@@ -122,7 +123,8 @@ namespace OnlineShopApp.Controllers
             {
                 return HttpNotFound();
             }
-            return View(GetUserViewModel(appUser));
+            var myHelper = new ControllersHelper();
+            return View(myHelper.GetUserViewModel(appUser, db, UserManager));
         }
 
         // POST: Users/Edit/5
@@ -170,14 +172,6 @@ namespace OnlineShopApp.Controllers
             model.SelectedRoleName = UserManager.GetRoles(model.Id).FirstOrDefault();
             AddErrors(result);
             return View(model);
-
-            //if (ModelState.IsValid)
-            //{
-            //    db.Entry(userViewModel).State = EntityState.Modified;
-            //    db.SaveChanges();
-            //    return RedirectToAction("Index");
-            //}
-            //return View(userViewModel);
         }
 
         // GET: Users/Delete/5
@@ -193,7 +187,8 @@ namespace OnlineShopApp.Controllers
             {
                 return HttpNotFound();
             }
-            return View(GetUserViewModel(appUser));
+            var myHelper = new ControllersHelper();
+            return View(myHelper.GetUserViewModel(appUser, db, UserManager));
         }
 
         // POST: Users/Delete/5
@@ -207,7 +202,8 @@ namespace OnlineShopApp.Controllers
             if (isPurchaseForClientExists)
             {
                 ModelState.AddModelError("", "Error! An error has occured. May be related to a Purchase associated with this Client.");
-                return View(GetUserViewModel(appUser));
+                var myHelper = new ControllersHelper();
+                return View(myHelper.GetUserViewModel(appUser, db, UserManager));
             }
             db.Users.Remove(appUser);
             db.SaveChanges();
@@ -231,20 +227,6 @@ namespace OnlineShopApp.Controllers
                 ModelState.AddModelError("", error);
             }
         }
-
-        private UserViewModel GetUserViewModel(ApplicationUser appUser)
-        {
-            UserViewModel model = new UserViewModel
-            {
-                Id = appUser.Id,
-                UserName = appUser.UserName,
-                Email = appUser.Email,
-                SelectedRoleName = UserManager.GetRoles(appUser.Id).FirstOrDefault(),
-                RoleChoices = db.Roles.Select(r => new SelectListItem { Value = r.Name, Text = r.Name }).ToList()
-            };
-            return model;
-        }
         #endregion
-
     }
 }

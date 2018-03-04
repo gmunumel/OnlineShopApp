@@ -56,6 +56,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Index", "ProductCategories")"><i class="fas fa-th"></i> Product Catgs</a>
                     </li>
+                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Help")"><i class="fas fa-rocket"></i> API</a>
+                        </li>
+                    }
                     @Html.Partial("_LoginPartial")
                 </ul>
             </div>
